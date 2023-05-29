@@ -1,0 +1,3 @@
+[submodule "styles/diploma-latex-template"]
+	path = styles/diploma-latex-template
+	url = https://github.com/iktovr/diploma-latex-template.git
