@@ -1,0 +1,38 @@
+\documentclass{diploma}
+
+\usepackage{styles/styles}
+
+\input{info}
+
+\begin{document}
+\begingroup
+  \fontsize{12pt}{14pt}\selectfont
+  
+  \makeInstituteHeader
+  
+  \makeTitle{О Т З Ы В\\\fontsize{14pt}{16pt}\selectfont РУКОВОДИТЕЛЯ}
+  
+  \makeStudentLine
+
+  \setlength{\parskip}{.5\baselineskip plus 2pt}
+
+  \makeAffiliation
+
+  \makeThemeLine
+
+  \makeSupervisorLine{Руководитель}{supervisor}
+
+  \uline{\hspace{1.25cm}
+  \textcolor{red}{Отзыв руководителя}
+  \hfill}
+
+  \uline{\hspace{1.25cm}\makeBorrowingsLine\hfill}
+
+  \makeReviewResult{\textcolor{red}{отлично}}
+
+  \makeReviewSignature{Руководитель}{supervisor}
+
+  \vfill
+  \clearpage
+\endgroup
+\end{document}

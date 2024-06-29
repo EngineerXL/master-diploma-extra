@@ -1,0 +1,215 @@
+\usepackage{nopageno}
+\usepackage{makecell}
+
+\SetSinglespace{1.2} % в оригинальных шаблонах судя по всему интервал 1.2
+\singlespacing
+\setlength{\parindent}{0cm} % и нет абзацного отступа
+\setlength{\intextsep}{0pt} % убирает большие пробелы до/после таблиц
+
+% В fullcite добавлена нумерация
+\DeclareCiteCommand{\fullcite}
+  {\usebibmacro{prenote}}
+  {
+    {\printtext[labelnumberwidth]{
+      \printfield{prefixnumber}
+      \printfield{labelnumber}}}
+    \usedriver
+    {\DeclareNameAlias{sortname}{default}}
+    {\thefield{entrytype}}
+  }
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+% Новые поля
+\def\studentInitials#1{\gdef\@studentInitials{#1}}
+\def\@studentInitials{\@latex@warning@no@line{No \noexpand\studentInitials given}}
+
+\def\supervisorInitials#1{\gdef\@supervisorInitials{#1}}
+\def\@supervisorInitials{\@latex@warning@no@line{No \noexpand\supervisorInitials given}}
+
+\def\supervisorDegree#1{\gdef\@supervisorDegree{#1}}
+\def\@supervisorDegree{\@latex@warning@no@line{No \noexpand\supervisorDegree given}}
+
+\def\headOfDepartmentInitials#1{\gdef\@headOfDepartmentInitials{#1}}
+\def\@headOfDepartmentInitials{\@latex@warning@no@line{No \noexpand\headOfDepartmentInitials given}}
+
+\def\percentageOfBorrowings#1{\gdef\@percentageOfBorrowings{#1}}
+\def\@percentageOfBorrowings{\@latex@warning@no@line{No \noexpand\percentageOfBorrowings given}}
+
+\def\firstConsultantInitials#1{\gdef\@firstConsultantInitials{#1}}
+\def\firstConsultantDegree#1{\gdef\@firstConsultantDegree{#1}}
+\def\secondConsultantInitials#1{\gdef\@secondConsultantInitials{#1}}
+\def\secondConsultantDegree#1{\gdef\@secondConsultantDegree{#1}}
+% Консультанты необязательны, поэтому без ворнингов
+
+% Глобальное
+\newcommand\makeInstituteHeader{
+  \begingroup
+  \onehalfspacing
+  \begin{minipage}{0.05\textwidth}
+    \includegraphics[scale=0.4]{inc/mai.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.85\textwidth}\raggedleft
+    \begin{center}
+      \fontsize{11pt}{10pt}\selectfont 
+      \textbf{МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ \\
+        РОССИЙСКОЙ ФЕДЕРАЦИИ \\ 
+        \hfill\break
+        ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ \\
+        ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ \\ 
+        <<МОСКОВСКИЙ АВИАЦИОННЫЙ ИНСТИТУТ
+      } \\
+      (национальный исследовательский университет)>>
+    \end{center}
+  \end{minipage}
+  \begin{center}
+    \fontsize{12pt}{0.1\baselineskip}\selectfont
+    \makebox[\linewidth]{\rule{\textwidth}{1.5pt}} 
+  \end{center}
+  \endgroup
+}
+
+\newcommand\makeAffiliation{
+  \begingroup
+  \fontsize{12pt}{16pt}\selectfont
+  \textbf{Институт (Филиал)} \uline{\@faculty\hfill} \textbf{Кафедра} \uline{\@department\hfill} \\
+  \textbf{Группа} \uline{\@group} \textbf{Направление подготовки} \expandafter\uline\expandafter{\expanded{\@speciality}\hfill} \\
+  \textbf{Профиль} \uline{\@profile\hfill} \\
+  \textbf{Квалификация:} \uline{\textbf{бакалавр}\hfill}
+  \endgroup
+}
+
+\newcommand\makeThemeLine{
+  \textbf{Наименование темы} \expandafter\uline\expandafter{\expanded{\@theme}\hfill}
+}
+
+\newcommand\makeSupervisorLine[2]{
+  \textbf{#1} \uline{\csname @#2\endcsname,\hfill}\\
+  \uline{\csname @#2Degree\endcsname\hfill}
+}
+
+\newcommand\makeStudentLine{
+  \textbf{Обучающийся} \uline{\@student\hfill}
+}
+
+\newcommand\makeTitle[1]{
+  \begin{center}
+    \bfseries\fontsize{18pt}{20pt}\selectfont 
+    #1
+  \end{center}
+}
+
+% Задание на ВКР
+\newcommand\makeHeadOfDepartmentSignature{
+  \bigskip
+  \hfill
+  \begin{minipage}[t]{\widthof{Заведующий кафедрой \@department\ \uline{\hspace{1.5cm}}\ \@headOfDepartmentInitials}}
+    \centering
+    \textbf{УТВЕРЖДАЮ}\\
+    \raggedleft
+    Заведующий кафедрой \@department\ \uline{\hspace{1.5cm}}\ \@headOfDepartmentInitials\\
+    \uline{\hspace{1cm}}\ \uline{\hspace{2cm}}\ \the\year{г.}
+  \end{minipage}
+}
+
+\newcommand\makeTaskSignatures{
+  \hfill
+  \begin{minipage}[t]{0.7\textwidth}
+    \setlength{\parskip}{.5\baselineskip plus 2pt}
+    Руководитель\ \uline{\hfill\@supervisorInitials}
+
+    Задание принял к исполнению\ \uline{\hfill\@studentInitials}
+  \end{minipage}
+}
+
+% Отзывы
+\newcommand\makeBorrowingsLine{
+  Работа проверена на объем заимствования. \% заимствования -- \@percentageOfBorrowings\%
+}
+
+\newcommand\makeReviewResult[1]{
+  Заключение:
+  \uline{Выпускная квалификационная работа бакалавра заслуживает оценки <<#1>>, а ее автор -- \@studentInitials
+  \ -- присвоения квалификации бакалавра по направлению \@speciality.\hfill}
+}
+
+\newcommand\makeReviewSignature[2]{
+  \uline{\hspace{1cm}}\ \uline{\hspace{2.5cm}}\ \the\year{г.}\hfill
+  #1\ \uline{\hspace{2cm}\csname @#2Initials\endcsname}
+}
+
+\newcommand\makeConsultantReview[3]{
+  \makeInstituteHeader
+  
+  \makeTitle{О Т З Ы В\\\fontsize{14pt}{16pt}\selectfont КОНСУЛЬТАНТА}
+
+  \begingroup
+  \makeStudentLine
+
+  \setlength{\parskip}{.5\baselineskip plus 2pt}
+  
+  \makeAffiliation
+
+  \makeThemeLine
+
+  \makeSupervisorLine{Консультант}{#1}
+
+  \uline{\hspace{1.25cm}
+  #2
+  \hfill}
+
+  \makeReviewResult{#3}
+
+  \makeReviewSignature{Консультант}{#1}
+  \endgroup
+
+  \vfill
+  \clearpage
+}
+
+% Титульный лист к раздаточному материалу
+% Титульная страница отчета пока не модульная, поэтому вся функция перегружается из-за названия
+\renewcommand\fillTitle{
+  \begingroup
+  \vfill
+
+  \noindent\begin{center}
+    \centering\bfseries\fontsize{16pt}{18pt}\selectfont 
+    РАЗДАТОЧНЫЙ МАТЕРИАЛ К \\
+    ВЫПУСКНОЙ КВАЛИФИКАЦИОННОЙ РАБОТЕ \\
+    БАКАЛАВРА
+  \end{center}
+
+  \vfill
+
+  \makeTheme{\@theme}
+
+  \vspace{28pt}
+  
+  {
+    \fontsize{12pt}{14pt}\selectfont
+    \setlength{\tabcolsep}{0pt}
+    \renewcommand{\arraystretch}{1.2}
+    \noindent \begin{tabularx}{\textwidth}{l>{\raggedright\arraybackslash}Xr}
+      \noindent Автор ВКРБ:   & \hspace{2cm} \@student          & \signature{3.5cm} \\
+      \noindent Руководитель: & \hspace{2cm} \@supervisor       & \signature{3.5cm} \\
+      \noindent Консультант:  & \hspace{2cm} \@firstConsultant  & \signature{3.5cm} \\
+      \noindent Консультант:  & \hspace{2cm} \@secondConsultant & \signature{3.5cm} \\
+      \noindent Рецензент:    & \hspace{2cm} \@reviewer         & \signature{3.5cm} \\
+    \end{tabularx}
+
+    \vspace{28pt}
+
+    \noindent \textbf{К защите допустить}
+
+    \noindent Заведующий кафедрой \@departmentFullName \hfill \@headOfDepartment \hfill \signature{3.5cm}
+    
+    \noindent \@date
+  }
+
+  \vfill 
+  \endgroup
+
+  \clearpage
+}

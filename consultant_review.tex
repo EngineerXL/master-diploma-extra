@@ -1,0 +1,19 @@
+\documentclass{diploma}
+
+\usepackage{styles/styles}
+
+\input{info}
+
+\begin{document}
+\begingroup
+  \fontsize{12pt}{14pt}\selectfont
+
+  \makeConsultantReview{firstConsultant}{
+  \textcolor{red}{Отзыв первого консультанта}
+  }{\textcolor{red}{хорошо}}
+
+  \makeConsultantReview{secondConsultant}{
+  \textcolor{red}{Отзыв второго консультанта}
+  }{\textcolor{red}{удовлетворительно}}
+\endgroup
+\end{document}
